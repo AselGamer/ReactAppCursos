@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Pressable, Text, TextInput } from "react-native";
 import globalStyles from '../styles/globalStyles';
 import axios from "axios";
 
-const CrearCurso = ({ navigation }) => {
+const CrearCurso = ({ navigation, route }) => {
 
+	const { setApi, id, nombreOptions } = route.params;
 	const [nombre, setNombre] = useState('');
 
 	const guardarCurso = async () => {
-		console.log(nombre);
 		try {
-			const res = await axios.post('https://symfonyasel.duckdns.org/ws/add_curso', {nombre: nombre});
+			let res = null
+			if (id) {
+				res = await axios.put('https://symfonyasel.duckdns.org/ws/update_curso/'+id, { nombre: nombre });
+			} else {
+				res = await axios.post('https://symfonyasel.duckdns.org/ws/add_curso', { nombre: nombre });
+			}
 			if (res) {
+				setApi(true);
 				navigation.navigate('Inicio');
 				setNombre('');
 			}
@@ -20,10 +26,15 @@ const CrearCurso = ({ navigation }) => {
 		}
 	}
 
+	useEffect(() => {
+		setNombre(nombreOptions);
+		navigation.setOptions({ title: id ? 'Editar Curso' : 'Crear Curso' });
+	}, [id]);
+
 	return (
 		<View>
 			<Text style={globalStyles.label}>Nombre</Text>
-			<TextInput style={globalStyles.textinput} onChangeText={value => setNombre(value)}></TextInput>
+			<TextInput style={globalStyles.textinput} value={nombre} onChangeText={value => setNombre(value)}></TextInput>
 			<Pressable style={globalStyles.button} onPress={() => guardarCurso()}>
 				<Text style={globalStyles.text}>Guardar</Text>
 			</Pressable>

@@ -88,6 +88,17 @@ const globalStyles = StyleSheet.create({
 	delete_button_text: {
 		color: 'black'
 	},
+	confirm_button: {
+		borderRadius: 4,
+		backgroundColor: '#a9b665',
+		justifyContent: 'center',
+		padding: 5,
+		marginLeft: 5,
+		marginRight: 5,
+	},
+	confirm_button_text: {
+		color: 'black'
+	},
 });
 
 export default globalStyles;
