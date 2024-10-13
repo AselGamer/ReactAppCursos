@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-	View,
+	Pressable,
+	Text
 } from 'react-native';
 
 import 'react-native-gesture-handler';
@@ -10,6 +11,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
 import Inicio from './views/Inicio';
+import CrearCurso from './views/CrearCurso';
 
 import globalStyles from './styles/globalStyles';
 
@@ -21,10 +23,18 @@ function App(): React.JSX.Element {
 				contentStyle: globalStyles.background,
 				headerStyle: globalStyles.header,
 				headerTitleStyle: globalStyles.header_title,
+				headerLeft: () => (<></>),
 			}}>
 				<Stack.Screen
 					name='Inicio'
 					component={Inicio}
+				/>
+				<Stack.Screen
+					name='CrearCurso'
+					component={CrearCurso}
+					options={{
+						title: 'Crear Curso',
+					}}
 				/>
 			</Stack.Navigator>
 		</NavigationContainer>
